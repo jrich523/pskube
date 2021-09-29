@@ -26,5 +26,6 @@ jobs:
           TOKEN: ${{ secrets.PS_GALLERY_KEY }}
         run: |
           ./build.ps1
-          gci -recurse
+          write-host "Current Path: $pwd"
+          gci
           Publish-Module -Path . -NuGetApiKey $env:TOKEN -Repository PSGallery
