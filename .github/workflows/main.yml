@@ -22,10 +22,8 @@ jobs:
       
       - name: build
         shell: pwsh
-        run: ./build.ps1
-      
-      - name: Publish Module to PowerShell Gallery
-        uses: pcgeek86/publish-powershell-module-action@v20
-        id: publish-module
-        with:
-          NuGetApiKey: ${{ secrets.PS_GALLERY_KEY }}
+        env:
+          TOKEN: ${{ secrets.PS_GALLERY_KEY }}
+        run: |
+          ./build.ps1
+          gci
