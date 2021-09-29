@@ -1,4 +1,4 @@
-#requires -Module ModuleBuilder, Configuration
+#requires -Module ModuleBuilder
 [CmdletBinding()]
 param(
     # A specific folder to build into
@@ -6,19 +6,17 @@ param(
 
     # The version of the output module
     [Alias("ModuleVersion")]
-    [string]$SemVer
+    [string]$SemVer=$env:TAG #this will pull the tag from github actions
 )
 
 # Sanitize parameters to pass to Build-Module
 $null = $PSBoundParameters.Remove('Test')
+if (-not $Semver) { $SemVer = "1.0" }
+$null = $PSBoundParameters.Add("SemVer", $SemVer)
 
-if (-not $Semver) {
-    #todo probably do something about this
-    if ($semver = "1.0") {
-        $null = $PSBoundParameters.Add("SemVer", $SemVer)
-    }
-}
 
+write-host "Creating Version: " $SemVer
+write-host "Vars: " $PSBoundParameters
 
 $ErrorActionPreference = "Stop"
 Push-Location $PSScriptRoot -StackName BuildPSProfileManager

@@ -1,0 +1,31 @@
+name: "Build and Publish"
+
+on:
+  create:
+    tags:
+      - '[0-9].*'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Install Dependencies
+        shell: pwsh
+        run: |
+          Set-PSRepository PSGallery -InstallationPolicy Trusted
+          Install-Module ModuleBuilder
+
+      - name: Set Env
+        run: echo "TAG=${GITHUB_REF#refs/*/}" >> $GITHUB_ENV
+      
+      - name: build
+        shell: pwsh
+        run: ./build.ps1
+      
+      - name: Publish Module to PowerShell Gallery
+        uses: pcgeek86/publish-powershell-module-action@v20
+        id: publish-module
+        with:
+          NuGetApiKey: ${{ secrets.PS_GALLERY_KEY }}
