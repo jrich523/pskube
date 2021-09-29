@@ -28,4 +28,4 @@ jobs:
           ./build.ps1
           write-host "Current Path: $pwd"
           gci
-          Publish-Module -Path . -NuGetApiKey $env:TOKEN -Repository PSGallery
+          Publish-Module -Path . -NuGetApiKey $env:TOKEN -Repository PSGallery -verbose
