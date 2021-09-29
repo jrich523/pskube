@@ -26,4 +26,4 @@ jobs:
           TOKEN: ${{ secrets.PS_GALLERY_KEY }}
         run: |
           ./build.ps1
-          gci
+          Publish-Module -Path . -NuGetApiKey $env:TOKEN -Repository PSGallery

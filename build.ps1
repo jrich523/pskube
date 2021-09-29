@@ -11,12 +11,15 @@ param(
 
 # Sanitize parameters to pass to Build-Module
 $null = $PSBoundParameters.Remove('Test')
-if (-not $Semver) { $SemVer = "1.0" }
-$null = $PSBoundParameters.Add("SemVer", $SemVer)
-
+if (-not $Semver) { 
+    $SemVer = "1.0"
+    $null = $PSBoundParameters.Add("SemVer", $SemVer)
+}
+else {
+    $PSBoundParameters.Item("SemVer") = $semver
+}
 
 write-host "Creating Version: " $SemVer
-write-host "Vars: " $PSBoundParameters
 
 $ErrorActionPreference = "Stop"
 Push-Location $PSScriptRoot -StackName BuildPSProfileManager
