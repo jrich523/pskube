@@ -7,7 +7,7 @@ on:
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: windows-latest
     steps:
       - uses: actions/checkout@v2
 
@@ -16,16 +16,11 @@ jobs:
         run: |
           Set-PSRepository PSGallery -InstallationPolicy Trusted
           Install-Module ModuleBuilder
-
-      - name: Set Env
-        run: echo "TAG=${GITHUB_REF#refs/*/}" >> $GITHUB_ENV
       
       - name: build
         shell: pwsh
         env:
           TOKEN: ${{ secrets.PS_GALLERY_KEY }}
         run: |
-          ./build.ps1
-          write-host "Current Path: $pwd"
-          gci
+          ./build.ps1 -semver $env:GITHUB_REF.split('/')[2]
           Publish-Module -Path . -NuGetApiKey $env:TOKEN -Repository PSGallery -verbose
