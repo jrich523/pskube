@@ -28,7 +28,7 @@ class k8Pod : k8 {
     [string]$Status #PHASE: Does a pod have a status? currently just using Phase, might need more
     [ipaddress]$PodIP
     [string]$QOSClass
-    [datetime]$StartTime
+    [nullable[Datetime]]$StartTime
 
     #Common labels
     [string] $App
@@ -38,12 +38,13 @@ class k8Pod : k8 {
     k8Pod([Object]$rawData) : base($rawData)
     {
 #Region Set Properties
+        Write-Debug "Creating pod $($this.name) in namespace $($this.namespace)"
         $this.Ready = $this._Raw.status.containerStatuses.Ready | measure -sum | %{ "$([int]$_.sum)/$([int]$_.count)"}
         #$this.Status = $this._Raw.status.phase
         $this.HostIP = $this._Raw.status.HostIP
         $this.PodIP = $this._Raw.status.PodIP
         $this.QOSClass = $this._Raw.status.qosClass
-        $this.startTime = if($this._Raw.status.startTime){get-date $this._Raw.status.startTime}
+        $this.startTime = if($this._Raw.status.startTime){(get-date $this._Raw.status.startTime).ToLocalTime()}
         $this.Restarts = $this._Raw.status.containerStatuses.restartCount | Measure-Object -sum | Select-Object -ExpandProperty sum
 
         #Metadata
@@ -81,7 +82,11 @@ class k8Pod : k8 {
     }
 
     [string] getAgeDisplay() {
-        return ([k8]$this).getAge($this.startTime)
+        if($this.startTime)
+        {
+            return ([k8]$this).getAge($this.startTime)
+        }
+        return $null
     }
 
     hidden [string] _getStatus() {

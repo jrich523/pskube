@@ -18,7 +18,7 @@ class k8 {
         $this._Raw = $rawData
         $this.ClusterContext = Get-k8Context -Current | select-object -ExpandProperty name
         $this.name = $this._Raw.metadata.Name
-        $this.creationTime = get-date $this._Raw.metadata.creationTimestamp
+        $this.creationTime = (get-date $this._Raw.metadata.creationTimestamp).ToLocalTime()
         #convert labels to a hash table for easier lookups/searching
         $this.labels = ([k8]$this).convertToHash($this._Raw.metadata.labels)
         $this.Annotations = ([k8]$this).convertToHash($this._Raw.metadata.annotations)

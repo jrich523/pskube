@@ -1,6 +1,6 @@
 function Get-K8Node {
     [cmdletBinding()]
-    [Alias("gkn")]
+    [Alias("gkno")]
     param(
         $Name='*',
         $Context
