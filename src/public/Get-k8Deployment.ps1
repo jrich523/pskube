@@ -15,6 +15,6 @@ function Get-K8Deployment {
     elseif ($namespace){$cmds += "--namespace=$namespace"}
     if($context){$cmds += "--context=$context"}
 
-    $svcs = kubeWrapper -kubeArgs $cmds | ConvertFrom-Json | newk8object
+    $svcs = kubeWrapper -kubeArgs $cmds | ConvertFrom-Json | newk8object -context $context
     $svcs | Where-Object { $_.name -like $Name}
 }

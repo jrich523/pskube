@@ -2,3 +2,6 @@
 # since files are loaded in alpha order, with Public being last, the file name starts with a Z to force it to load last
 
 #initialize-k8Session
+
+# Add in dynamic functions
+update-k8Command | iex

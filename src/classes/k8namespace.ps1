@@ -1,25 +1,18 @@
-class k8Namespace : k8 {
+class k8Namespaced : k8 {
 #Region Properties
-    #### Spec ####
-    # Finalizers?
-
-    #### Status ####
-    [string]$Status #todo create a type/enum for this?
-    [string]$ResourceVersion
-
+    #### Metadata ####
+    [string]$Namespace
 #EndRegion
     
-    k8Namespace([Object]$rawData) : base($rawData)
+    k8Namespaced([Object]$rawData, $context) : base($rawData, $context)
     {
 #Region Set Properties
         
-        $this.ResourceVersion = $this._Raw.metadata.ResourceVersion
-        $this.status = $this._Raw.status.phase
-
+    $this.Namespace = $this._Raw.metadata.namespace
 #EndRegion
         # Default Display Set
-        $defaultdisplay = @('Name','Ready','Status','Restarts','Age')
-        ([k8]$this).addDefaultDisplaySet($defaultdisplay)
+        #$defaultdisplay = @('Name','Ready','Status','Restarts','Age')
+        #([k8]$this).addDefaultDisplaySet($defaultdisplay)
     }
 
     [string] getAgeDisplay() {

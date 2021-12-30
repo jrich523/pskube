@@ -30,6 +30,9 @@ try {
     Write-Verbose "Build-Module src\build.psd1 $($ParameterString) -Target CleanBuild"
     Build-Module src\build.psd1 @PSBoundParameters -Target CleanBuild -Passthru -OutVariable BuildOutput | Split-Path
     Write-Verbose "Module build output in $(Split-Path $BuildOutput.Path)"
+    Write-Verbose "Updating Manifest for dynamic functions"
+    # for now export everything, but eventually change to '*-*'
+    Update-ModuleManifest -Path "./$semver/pskube.psd1" -FunctionsToExport '*' -AliasesToExport '*' -CmdletsToExport '*'
 
 } finally {
     Pop-Location -StackName BuildPSProfileManager

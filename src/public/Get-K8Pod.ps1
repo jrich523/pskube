@@ -13,6 +13,6 @@ param(
     if($all){$cmds += "--all-namespaces"}
     elseif($namespace){$cmds += "--namespace=$namespace"}
     if($context){$cmds += "--context=$context"}
-    $pods = kubeWrapper -kubeArgs $cmds | ConvertFrom-Json | newk8object
+    $pods = kubeWrapper -kubeArgs $cmds | ConvertFrom-Json | newk8object -context $Context
     $pods | Where-Object { $_.name -like $Name}
 }

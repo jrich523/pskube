@@ -24,7 +24,7 @@ class k8Service : k8 {
         [object]    $loadBalancer           #custom type LoadBalancerStatus
     #EndRegion
     
-        k8Service([Object]$rawData) : base($rawData)
+        k8Service([Object]$rawData, $context) : base($rawData, $context)
         {
     #Region Set Properties
             $this.clusterip = $this._raw.spec.clusterip

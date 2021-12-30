@@ -28,7 +28,7 @@ class k8Node : k8 {
 
     #EndRegion
     
-        k8Node([Object]$rawData) : base($rawData)
+        k8Node([Object]$rawData, $context) : base($rawData, $context)
         {
             #Region Set Properties 
             #$this.Status = $this._Raw.status.conditions | ? type -eq 'Ready' | select -ExpandProperty status

@@ -11,7 +11,7 @@ class k8Ingress : k8 {
 
     #EndRegion
     
-        k8Ingress([Object]$rawData) : base($rawData)
+        k8Ingress([Object]$rawData, $context) : base($rawData, $context)
         {
     #Region Set Properties          
             #Spec

@@ -25,7 +25,7 @@ class k8Deployment : k8 {
 
     #EndRegion
     
-        k8Deployment([Object]$rawData) : base($rawData)
+        k8Deployment([Object]$rawData, $context) : base($rawData, $context)
         {
     #Region Set Properties
             $this.minReadySeconds = $this._Raw.spec.minReadySeconds

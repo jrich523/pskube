@@ -1,4 +1,4 @@
-class k8Pod : k8 {
+class k8Pod : k8Namespaced {
 #Region Properties
     #### Custom ####
     ## these are typically derived from multiple fields, need to look to kubectl to see what it does
@@ -35,7 +35,7 @@ class k8Pod : k8 {
     [version] $Version
 #EndRegion
 
-    k8Pod([Object]$rawData) : base($rawData)
+    k8Pod([Object]$rawData, $context) : base($rawData, $context)
     {
 #Region Set Properties
         Write-Debug "Creating pod $($this.name) in namespace $($this.namespace)"

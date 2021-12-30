@@ -7,22 +7,20 @@ class k8 {
     [datetime]$CreationTime
     [hashtable]$Labels
     [string]$Name
-    [string]$Namespace
     [string]$ClusterContext
     #resourceVersion                     #probably dont need this
     #SelfLink                            #probably dont need it
     [GUID]$uid
 
-    k8([object]$rawData){
+    k8([object]$rawData, $context){
         
         $this._Raw = $rawData
-        $this.ClusterContext = Get-k8Context -Current | select-object -ExpandProperty name
+        $this.ClusterContext = $context
         $this.name = $this._Raw.metadata.Name
         $this.creationTime = (get-date $this._Raw.metadata.creationTimestamp).ToLocalTime()
         #convert labels to a hash table for easier lookups/searching
         $this.labels = ([k8]$this).convertToHash($this._Raw.metadata.labels)
         $this.Annotations = ([k8]$this).convertToHash($this._Raw.metadata.annotations)
-        $this.Namespace = $this._Raw.metadata.namespace
         $this.uid = [GUID]$this._Raw.metadata.uid
     }
 
