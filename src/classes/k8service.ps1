@@ -53,8 +53,4 @@ class k8Service : k8 {
             $defaultdisplay = @('Name','Type','ClusterIP','ExternalIP','Ports','Age')
             ([k8]$this).addDefaultDisplaySet($defaultdisplay)
         }
-    
-        [string] getAgeDisplay() {
-            return ([k8]$this).getAge($this.CreationTime)
-        }
     }

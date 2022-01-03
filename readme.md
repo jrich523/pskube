@@ -20,7 +20,14 @@ Metadata - https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.17/#
 
 ## Testing and Development
 A quick way to reload and test this module, but you'll need to update the paths based on where you've cloned it.
-`function load {D:\repos\gh\jrich523\pskube\build.ps1;ipmo D:\repos\gh\jrich523\pskube -verbose -force -debug}`
+```
+function load {
+    $path='D:\repos\gh\jrich523\pskube'
+    iex $path\build.ps1
+    remove-module pskube
+    ipmo $path -verbose -force -debug
+}
+```
 To have access to the classes directly you need to import them with
 `using module path/to/pskube`
 

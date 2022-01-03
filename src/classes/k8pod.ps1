@@ -81,14 +81,6 @@ class k8Pod : k8Namespaced {
         ([k8]$this).addDefaultDisplaySet($defaultdisplay)
     }
 
-    [string] getAgeDisplay() {
-        if($this.startTime)
-        {
-            return ([k8]$this).getAge($this.startTime)
-        }
-        return $null
-    }
-
     hidden [string] _getStatus() {
         $sts = if($this._raw.metadata.deletiontimestamp){
             "Terminating"

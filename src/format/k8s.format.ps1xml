@@ -58,7 +58,7 @@
                 <PropertyName>Restarts</PropertyName>
               </TableColumnItem>
               <TableColumnItem>
-                <ScriptBlock>$_.getAgeDisplay()</ScriptBlock>
+                <PropertyName>Age</PropertyName>
               </TableColumnItem>
               <TableColumnItem>
                 <PropertyName>HostIP</PropertyName>
